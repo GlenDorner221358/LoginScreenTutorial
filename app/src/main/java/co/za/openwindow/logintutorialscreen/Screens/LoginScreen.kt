@@ -49,29 +49,39 @@ import co.za.openwindow.logintutorialscreen.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Login(
-    navigateToRegister:() -> Unit = {},
+fun LoginScreenTutorial(
     modifier: Modifier = Modifier
 ) {
 
-    val bgWorkNow = painterResource(id = R.drawable.backgroundimage)
-    val rocketship = painterResource(id = R.drawable.rocket)
+//    For the email and text fields to work
     var emailText by remember { mutableStateOf("") }
     var passwordText by remember { mutableStateOf("") }
-    val textColor = Color(0xFFF090011)
+
+//    Images
+    val bgWorkNow = painterResource(id = R.drawable.backgroundimage)
+    val rocketship = painterResource(id = R.drawable.rocket)
+
+//    Specific colors
     val backgroundColor = Color(0xFF090011)
     val buttonColor = Color(0xFF7920C2)
     val rocketcolor = Color(0xFFF2994A)
 
+//    Checkbox var (use to toggle if checked or not)
     var checked by remember { mutableStateOf(false) }
 
 
+//    Where the code starts
+//    Main over all container box.
+//    allows for the login panel to be in front of the background with no weird gaps where corners
+//    are rounded
+//    Also lets us add the rocket ship logo over the front of the login panel
     Box(
-
         modifier = modifier
             .background(Color.White)
             .fillMaxSize()
     ) {
+
+//        Background image at the top behind the rocket ship icon
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
@@ -85,34 +95,45 @@ fun Login(
                     .fillMaxWidth()
             )
         }
+//        End of background
 
+//        Start of middle layer (the login panel)
         Column(
+//            This column lets us add a spacer between the login panel and the top of the
+//            screen. Which lets us see the background we made earlier
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .fillMaxSize()
         ) {
 
+//            Adds space between top of page and top of login panel
             Spacer(modifier = modifier.size(138.dp))
 
+//          The login panel itself
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = modifier
+//                    use .clip to round the corners
                     .clip(shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp))
                     .background(backgroundColor)
                     .padding(25.dp)
                     .fillMaxHeight()
             ) {
 
+//                More space
                 Spacer(modifier = modifier.size(70.dp))
 
+//                Heading
                 Text(
                     text = "LOGIN",
                     fontSize = 45.sp,
                     color = Color.White
                 )
 
+//                Little space before flavor text
                 Spacer(modifier = modifier.size(8.dp))
 
+//                Flavor text
                 Text(
                     text = "Explore the galaxy",
                     fontSize = 20.sp,
@@ -122,7 +143,13 @@ fun Login(
 
                 Spacer(modifier = modifier.size(30.dp))
 
+//                Stay with me here, it gets wild
+//                The text fields are columns with a label above and then the text field below
+
+
                 Column {
+
+//                    Label above the field
                     Text(
                         text = "Your email",
                         fontSize = 15.sp,
@@ -130,10 +157,14 @@ fun Login(
                         modifier = modifier
                             .padding(8.dp)
                     )
+
+//                    Where you type stuff
                     TextField(
                         value = emailText,
                         onValueChange = { emailText = it },
-                        label = { Text("John Doe @ teufort .com") },
+                        label = { Text("JohnDoe@teufort.com") }, //this is the text displayed inside the field
+//                        Think of this label like placeholder text
+
                         colors = TextFieldDefaults.textFieldColors(
                             focusedTextColor = Color.White, // Set the text color to white
                             unfocusedTextColor = Color.White, // Set the text color to white
@@ -141,10 +172,11 @@ fun Login(
                             focusedIndicatorColor = Color.Transparent, // Remove the underline when focused
                             unfocusedIndicatorColor = Color.Transparent, // Remove the underline when not focused
                             containerColor = Color.Transparent, // Transparent background
-                            focusedLabelColor = Color.White,
-                            unfocusedLabelColor = Color.White
+                            focusedLabelColor = Color.White, // Set the label in the field color to white
+                            unfocusedLabelColor = Color.White // Set the label in the field color to white
                         ),
                         modifier = modifier
+//                            Some styling
                             .fillMaxWidth()
                             .border(
                                 width = 2.dp,
@@ -159,6 +191,8 @@ fun Login(
 
                 Spacer(modifier = modifier.size(30.dp))
 
+//                This is the exact same as the email text field
+//                Copy + pasted
                 Column {
                     Text(
                         text = "Your Password",
@@ -189,6 +223,9 @@ fun Login(
                                 shape = RoundedCornerShape(30.dp)
                             )
                             .height(45.dp),
+
+//                        Small change here, this is so that whatever you type is censored
+//                        Like a real password input field
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                     )
@@ -197,26 +234,30 @@ fun Login(
 
                 Spacer(modifier = modifier.size(2.dp))
 
+//                The row below the password field
                 Row (
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = modifier
                         .fillMaxWidth()
                 ){
+//                    Checkbox
                     Checkbox(
                         checked = checked,
                         onCheckedChange = { checked = it }
                     )
-
+//                    Text next to the checkbox
                     Text(
                         "Remember Me",
                         fontSize = 12.sp,
                         color = Color.White
                     )
 
+//                    Spacer to add some distance inbetween
                     Spacer(modifier = modifier
                         .width(75.dp))
 
+//                    Forgot password button
                     TextButton(
                         onClick = {
                         // Add your navigation here
@@ -231,8 +272,11 @@ fun Login(
 
                 Spacer(modifier = modifier.size(45.dp))
 
+//                The login button
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+//                              Add your onclick function here
+                              },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = buttonColor
                     ),
@@ -248,13 +292,10 @@ fun Login(
                     )
                 }
 
+//                Adds space below the login button
                 Spacer(modifier = modifier.size(55.dp))
 
-                NavigateToRegisterSection(
-                    question = "Don't have an Account?",
-                    buttonText = "Register"
-                )
-
+//                Text below the login button
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 )
@@ -263,8 +304,12 @@ fun Login(
                         text = "Don't have an account?",
                         color = Color.White
                     )
+
+//                    Clickable text button for navigation
                     TextButton(
-                        onClick = { navigateToRegister.invoke() }) {
+                        onClick = {
+//                            Add your navigation here
+                        }) {
                         Text(text = "Sign Up", color = rocketcolor)
                     }
                 }
@@ -273,20 +318,25 @@ fun Login(
 
         }
 
+//        Top layer (Rocketship icon/logo)
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .fillMaxSize()
         ) {
             Spacer(modifier = modifier.size(90.dp))
+
+//          The orange circle
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = modifier
                     .size(100.dp) // Set the size of the circle
                     .background((rocketcolor), shape = CircleShape) // Set the color and shape
             ){
+
+//              The actual logo image on the orange circle
                 Image(
-                    painter = rocketship, // Use the correct variable name
+                    painter = rocketship, //Declared at the top
                     contentDescription = "rocketship",
                     modifier = modifier
                         .size(80.dp)
@@ -298,16 +348,9 @@ fun Login(
     }
 }
 
+//This bit of code lets us see the preview in the split code window over there -->
 @Preview(showBackground = true)
 @Composable
-fun LoginPreview() {
-    Login()
-}
-
-@Composable
-fun  NavigateToRegisterSection(
-    question: String,
-    buttonText: String
-){
-
+fun LoginScreenTutorialPreview() {
+    LoginScreenTutorial()
 }
